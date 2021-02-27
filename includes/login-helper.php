@@ -11,8 +11,8 @@ if(isset($_POST['login-submit']))
         header("Location: ../login.php?error=EmptyField");
         exit();  
     }
-    $sql =  "SELECT * FROM users WHERE uname=? OR email=?";
-    $stml = mysqli_stmt_init($conn);
+    $sql =  "SELECT * FROM users WHERE uname=? OR email=?;";
+    $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt, $sql))
                 {
                     header("Location: ../login.php?error=SQLInjection");
@@ -36,11 +36,15 @@ if(isset($_POST['login-submit']))
                 $_SESSION['fname'] = $data['fname'];
                 $_SESSION['uname'] = $data['uname'];
 
-                echo "<h1>Success!</h1><p>$uname</p>";
+                //echo "<h1>Success!</h1><p>$uname</p>";
+                header("Location: ../profile.php?success=LoginSuccess");
+                exit();
+                
 
             }
-            else{"Location: ../login.php?error=WrongPass";
-            exit();
+            else{
+                header("Location: ../login.php?error=WrongPass");
+                exit();
         }
     } 
     }
